@@ -17,8 +17,8 @@ required.string = (value: unknown): string => (
     check.string(value) ? value : throws()
 )
 
-required.number = (value: unknown): string => (
-    check.string(value) ? value : throws()
+required.number = (value: unknown): number => (
+    check.number(value) ? value : throws()
 )
 
 required.function = (value: unknown): Function => (
