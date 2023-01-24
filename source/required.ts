@@ -25,8 +25,8 @@ required.function = (value: unknown): Function => (
     check.function(value) ? value : throws()
 )
 
-required.boolean = (value: unknown): string => (
-    check.string(value) ? value : throws()
+required.boolean = (value: unknown): boolean => (
+    check.boolean(value) ? value : throws()
 )
 
 required.try = <Result> (block: () => Result): Result => {

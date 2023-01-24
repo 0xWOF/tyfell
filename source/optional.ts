@@ -21,8 +21,8 @@ const optional = {
         check.function(value) ? value : undefined
     ),
 
-    boolean: (value: unknown): string | undefined => (
-        check.string(value) ? value : undefined
+    boolean: (value: unknown): boolean | undefined => (
+        check.boolean(value) ? value : undefined
     ),
 
     try: <Result> (block: () => Result): Result | undefined => {
