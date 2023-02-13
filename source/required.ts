@@ -29,6 +29,10 @@ required.boolean = (value: unknown): boolean => (
     check.boolean(value) ? value : throws()
 )
 
+required.actual = <Actual> (value: unknown, actual: Actual): Actual | undefined => (
+    check.actual(value, actual) ? value : undefined
+),
+
 required.try = <Result> (block: () => Result): Result => {
     try { return block() }
     catch { return throws() }

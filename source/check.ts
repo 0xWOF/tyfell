@@ -29,6 +29,10 @@ const check = {
         typeof value === 'function' || value instanceof Function
     ),
 
+    actual: <Actual> (value: unknown, actual: Actual): value is Actual => (
+        value === actual
+    ),
+
     boolean: (value: unknown): value is boolean => (
         typeof value === 'boolean' || value instanceof Boolean
     ),

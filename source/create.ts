@@ -24,6 +24,20 @@ const create = {
         return mapObject
     },
 
+    filtered: <Value> (
+        object: Partial<Record<string, Value>>,
+        filter: (key: string, value: Value) => boolean,
+        ): Partial<Record<string, Value>> => {
+        const filterObject: Partial<Record<string, Value>> = {}
+
+        Object.keys(object).forEach(key => {
+            if (filter(key, object[key]!))
+            filterObject[key] = object[key]!
+        })
+
+        return filterObject
+    },
+
     modified: <Type extends object> (
         object: Type,
         modify: (object: Type) => void,

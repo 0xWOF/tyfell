@@ -2,16 +2,16 @@ const extract = <Type extends object, Key extends keyof Type> (object: Type, key
     object[key] as unknown as Type[Key]
 )
 
-extract.entries = <Value> (object: Partial<Record<string, Value>>): [string, Value][] => (
-    Object.keys(object).map(key => [key, object[key]!])
+extract.entries = <Value> (object: Partial<Record<string, Value>> | Value[]): [string, Value][] => (
+    Object.keys(object).map(key => [key, (object as Partial<Record<string, Value>>)[key]!])
 )
 
-extract.keys = <Value> (object: Partial<Record<string, Value>>): string[] => (
+extract.keys = <Value> (object: Partial<Record<string, Value>> | Value[]): string[] => (
     Object.keys(object)
 )
 
-extract.values = <Value> (object: Partial<Record<string, Value>>): Value[] => (
-    Object.keys(object).map(key => object[key]!)
+extract.values = <Value> (object: Partial<Record<string, Value>> | Value[]): Value[] => (
+    Object.keys(object).map(key => (object as Partial<Record<string, Value>>)[key]!)
 )
 
 export { extract }

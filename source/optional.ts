@@ -13,8 +13,8 @@ const optional = {
         check.string(value) ? value : undefined
     ),
 
-    number: (value: unknown): string | undefined => (
-        check.string(value) ? value : undefined
+    number: (value: unknown): number | undefined => (
+        check.number(value) ? value : undefined
     ),
 
     function: (value: unknown): Function | undefined => (
@@ -23,6 +23,10 @@ const optional = {
 
     boolean: (value: unknown): boolean | undefined => (
         check.boolean(value) ? value : undefined
+    ),
+
+    actual: <Actual> (value: unknown, actual: Actual): Actual | undefined => (
+        check.actual(value, actual) ? value : undefined
     ),
 
     try: <Result> (block: () => Result): Result | undefined => {

@@ -5,9 +5,9 @@ utility library for type safe and null safe and declarative programming on types
 ## example
 
 ```typescript
-import { convert, optional, required, throws } from 'tyfell'
+import { compute, optional, required, throws } from 'tyfell'
 
-const Package = (object: unknown) => optional.try(() => convert.object<Package>(object, object => ({
+const Package = (object: unknown) => optional.try(() => compute.object<Package>(object, object => ({
     name: required.string(object['name']),
     version: required.string(object['version']),
     build: optional.number(object['build']),
@@ -19,10 +19,10 @@ type Package = {
     build?: number
 }
 
-let package: Package = convert.object(
+let package: Package = compute.object(
     optional.try(() => JSON.parse(`{"name":"tyfell","version":"0.0.0"}`)),
     Package,
-) ?? throws(Error('json string can not be converted to Package type'))
+) ?? throws(Error('json string can not be computed to Package type'))
 ```
 
 ## feature
@@ -30,8 +30,7 @@ let package: Package = convert.object(
 - assign: same with Object.assign
 - check: check type and return boolean
 - clone: clone object as shallow or deep
-- compute: run function and return result
-- convert: check type and run function and return result or return undefined
+- compute: check type and run function and return result or return undefined
 - create: create object with source and modification
 - extract: extract from object
 - merge: merge objects
