@@ -9,8 +9,7 @@ const check = {
 
     object: (value: unknown): value is Partial<Record<string, unknown>> => (
         value !== null
-        && typeof value === 'object'
-        && Object.prototype.toString.call(value) === '[object Object]'
+        && (typeof value === 'object' || value instanceof Object)
     ),
     
     array: (value: unknown): value is Array<unknown> => (
