@@ -1,4 +1,5 @@
 import { check } from './check'
+import { upcast } from './upcast'
 
 const optional = {
     object: (value: unknown): Partial<Record<string, unknown>> | undefined => (
@@ -29,10 +30,13 @@ const optional = {
         check.actual(value, actual) ? value : undefined
     ),
 
-    try: <Result> (block: () => Result): Result | undefined => {
-        try { return block() }
+    try: upcast<{
+        <Result> (block: () => Result): Result | undefined
+        <Result> (block: () => Promise<Result>): Promise<Result | undefined>
+    }>(async <Result> (block: () => Promise<Result>): Promise<Result | undefined> => {
+        try { return await block() }
         catch { return undefined }
-    },
+    }),
 }
 
 export { optional }
