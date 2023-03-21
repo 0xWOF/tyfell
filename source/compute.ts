@@ -48,6 +48,12 @@ compute.function = <Result> (
     check.function(value) ? block(value) : undefined
 )
 
+compute.promise = <Result> (
+    value: unknown, block: (value: Promise<unknown>) => Result
+): Result | undefined => (
+    check.promise(value) ? block(value) : undefined
+)
+
 compute.boolean = <Result> (
     value: unknown, block: (value: boolean) => Result
 ): Result | undefined => (

@@ -1,4 +1,5 @@
 import { check } from './check'
+import { ObjectOf, Schema } from './schema'
 import { upcast } from './upcast'
 
 const optional = {
@@ -22,6 +23,10 @@ const optional = {
         check.function(value) ? value : undefined
     ),
 
+    promise: (value: unknown): Promise<unknown> | undefined => (
+        check.promise(value) ? value : undefined
+    ),
+
     boolean: (value: unknown): boolean | undefined => (
         check.boolean(value) ? value : undefined
     ),
@@ -33,10 +38,29 @@ const optional = {
     try: upcast<{
         <Result> (block: () => Result): Result | undefined
         <Result> (block: () => Promise<Result>): Promise<Result | undefined>
-    }>(async <Result> (block: () => Promise<Result>): Promise<Result | undefined> => {
-        try { return await block() }
+    }>(<Result> (block: () => Promise<Result> | Result): Promise<Result | undefined> | Result | undefined => {
+        let value: Promise<Result> | Result
+
+        try { value = block() }
         catch { return undefined }
+
+        if (check.promise(value)) {
+            return (async () => {
+                try { return await value }
+                catch { return undefined }
+            })()
+        }
+        else {
+            return value
+        }
     }),
+
+    schema: <ActualSchema extends Schema> (
+        value: unknown,
+        schema: ActualSchema
+    ): ObjectOf<ActualSchema> | undefined => (
+        check.schema(value, schema) ? value : undefined
+    ),
 }
 
 export { optional }
