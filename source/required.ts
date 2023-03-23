@@ -48,7 +48,7 @@ required.try = <Result> (block: () => Result): Result => {
 required.schema = <ActualSchema extends Schema> (
     value: unknown,
     schema: ActualSchema
-): ObjectOf<ActualSchema> | undefined => (
+): ObjectOf<ActualSchema> => (
     check.schema(value, schema) ? value : throws(error)
 )
 
