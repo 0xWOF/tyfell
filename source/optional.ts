@@ -1,5 +1,5 @@
 import { check } from './check'
-import { ObjectOf, Schema } from './schema'
+import { TypeOf, Schema } from './schema'
 import { upcast } from './upcast'
 
 const optional = {
@@ -55,10 +55,10 @@ const optional = {
         }
     }),
 
-    schema: <ActualSchema extends Schema> (
+    schema: <Actual extends Schema> (
         value: unknown,
-        schema: ActualSchema
-    ): ObjectOf<ActualSchema> | undefined => (
+        schema: Actual
+    ): TypeOf<Actual> | undefined => (
         check.schema(value, schema) ? value : undefined
     ),
 }

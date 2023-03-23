@@ -1,5 +1,5 @@
 import { extract } from "./extract"
-import { ObjectOf, Schema } from "./schema"
+import { TypeOf, Schema } from "./schema"
 
 const check = {
     defined: <Value> (value: Value): value is Exclude<Value, undefined> => (
@@ -43,14 +43,28 @@ const check = {
         typeof value === 'boolean' || value instanceof Boolean
     ),
 
-    schema: <ActualSchema extends Schema> (
+    schema: <Actual extends Schema> (
         value: unknown,
-        schema: ActualSchema
-    ): value is ObjectOf<ActualSchema> => (
-        check.object(value)
-        && extract.entries(schema).every(([key, type]) => (
-            check[type](value[key])
-        ))
+        schema: Actual
+    ): value is TypeOf<Actual> => (
+        (
+            check.string(schema) 
+            && (check as any)[schema](value)
+        )
+        || (
+            check.array(schema)
+            && check.array(value)
+            && extract.entries(schema).every(([key, valueSchema]) => (
+                check.schema((value as any)[key], valueSchema)
+            ))
+        )
+        || (
+            check.object(schema)
+            && check.object(value)
+            && extract.entries(schema).every(([key, valueSchema]) => (
+                check.schema(value[key], valueSchema as any)
+            ))
+        )
     )
 }
 

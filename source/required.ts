@@ -1,5 +1,5 @@
 import { check } from './check'
-import { ObjectOf, Schema } from './schema'
+import { TypeOf, Schema } from './schema'
 import { throws } from './throws'
 
 const error = Error('unmatched type')
@@ -45,10 +45,10 @@ required.try = <Result> (block: () => Result): Result => {
     catch { return throws(error) }
 }
 
-required.schema = <ActualSchema extends Schema> (
+required.schema = <Actual extends Schema> (
     value: unknown,
-    schema: ActualSchema
-): ObjectOf<ActualSchema> => (
+    schema: Actual
+): TypeOf<Actual> => (
     check.schema(value, schema) ? value : throws(error)
 )
 
