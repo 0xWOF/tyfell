@@ -54,15 +54,20 @@ const check = {
         || (
             check.array(schema)
             && check.array(value)
-            && extract.entries(schema).every(([key, valueSchema]) => (
-                check.schema((value as any)[key], valueSchema)
+            && value.every(item => (
+                check.schema(item, schema[0])
             ))
         )
         || (
             check.object(schema)
             && check.object(value)
             && extract.entries(schema).every(([key, valueSchema]) => (
-                check.schema(value[key], valueSchema as any)
+                key[key.length - 1] === '?' ? (
+                    check.schema(value[key], valueSchema as any)
+                    || check.undefined(value[key])
+                ) : (
+                    check.schema(value[key], valueSchema as any)
+                )
             ))
         )
     )
