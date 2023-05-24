@@ -1,5 +1,5 @@
-const extract = <Type extends object, Key extends keyof Type> (object: Type, key: Key): Type[Key] => (
-    object[key] as unknown as Type[Key]
+const extract = <Type extends object> (object: Type, key: string): unknown => (
+    (object as any)[key] as unknown
 )
 
 extract.entries = <Value> (object: Partial<Record<string, Value>> | Value[]): [string, Value][] => (

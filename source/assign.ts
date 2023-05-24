@@ -1,6 +1,4 @@
-import { extract } from './extract'
-
-const assign_object = extract(Object, 'assign')
+const assign_object = Object.assign
 
 const assign_common: AssignFunction = function <Type extends object> (object: Type) {
     const result = Object(object)
