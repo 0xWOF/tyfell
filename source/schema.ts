@@ -23,21 +23,6 @@ type TypeOf<Actual extends Schema> = (
     never
 )
 
-// type Test = {
-//     a: string;
-//     b: {
-//         a: number | undefined;
-//         b: number;
-//     }[] | undefined;
-// }
-type Test = TypeOf<{
-    'a': 'string',
-    'b?': [{
-        'a?': 'number',
-        'b': 'number',
-    }],
-}>
-
 export {
     Schema,
     TypeOf,
